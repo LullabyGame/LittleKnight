@@ -41,10 +41,14 @@ public:
     
 private:
     LayerColor* backgroundLayer;
+    LayerColor* layerColor;//遮挡不能连线的元素
+    Sprite* diedSprite;//标记死亡的怪物
     TileSprite* tileMatrix[MATRIX_WIDTH][MATRIX_HEIGHT] = {0};
     TileSprite* lastPaintedTile;
     cocos2d::Vector<TileSprite*> linePassedTiles;
     cocos2d::Vector<LineSprite*> lines;
+    cocos2d::Vector<LayerColor*> layerColors;
+    cocos2d::Vector<Sprite*> diedSprites;
     int level = 0;
     int remainsMonster;
     Label* remainsMonsterLabel;
@@ -56,9 +60,12 @@ private:
     void deleteDepetitionLine(TileSprite* onTouchTile);//当选择到已经经过的格子，删除该格子后的线段
     void fallDownItems();
     void fillTiles();
+    void deathMark(cocos2d::Vector<TileSprite*> tiles);//标记怪物死亡
     
     void mainMenuCallback(Ref* sender);
     void addTouchListeners();
+    
+
     
 };
 
