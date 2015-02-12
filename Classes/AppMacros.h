@@ -11,8 +11,7 @@
 /* If you want to switch design resolution, change next line */
 #define TARGET_DESIGN_RESOLUTION_SIZE  DESIGN_RESOLUTION_750X1334
 
-typedef struct tagResource
-{
+typedef struct tagResource {
     cocos2d::Size size;
     char directory[100]; 
 }Resource;
