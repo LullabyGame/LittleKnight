@@ -23,7 +23,7 @@ Scene* NormalModeScene::createScene(int level) {
     auto scene = Scene::create();
     auto layer = NormalModeScene::createLayer(level);
     scene->addChild(layer);
-    CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("sound/got.mp3");
+//    CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("sound/got.mp3");
     return scene;
 }
 
@@ -147,6 +147,38 @@ bool NormalModeScene::onTouchBegan(Touch *touch, Event *event) {
     
     if (onTouchTile != NULL) {
         // CCLOG("当前选中的为Tile[%d][%d]", currentTile->getArrayX(), currentTile->getArrayY());
+        //获取当前点击格子的图片属性
+        int itemtype = onTouchTile->getItem()->getItemType();
+        //当点击事件发生时，给当前界面增加暗层，只显示相同的元素，不同的元素被遮盖，剑和怪物除外。
+        for (int i = 0; i < MATRIX_WIDTH; i++) {
+            for (int j = 0; j < MATRIX_HEIGHT; j++) {
+                TileSprite* tile = tileMatrix[i][j];
+                if (tile != NULL) {
+                    if (itemtype == ItemType::sword){
+                        if (tile->getItem()->getItemType() != ItemType::monster1 &&
+                            tile->getItem()->getItemType() != ItemType::sword) {
+                            layerColor = LayerColor::create(Color4B(54, 54, 54, 100), TILE_SIDE_LENGTH, TILE_SIDE_LENGTH);
+                            layerColor->setPosition(Vec2(tile->getPosX(), tile->getPosY()));
+                            addChild(layerColor);
+                            layerColors.pushBack(layerColor);
+                        }
+                    }else if (itemtype == ItemType::monster1){
+                        if (tile->getItem()->getItemType() != ItemType::monster1 &&
+                            tile->getItem()->getItemType() != ItemType::sword) {
+                            layerColor = LayerColor::create(Color4B(54, 54, 54, 100), TILE_SIDE_LENGTH, TILE_SIDE_LENGTH);
+                            layerColor->setPosition(Vec2(tile->getPosX(), tile->getPosY()));
+                            addChild(layerColor);
+                            layerColors.pushBack(layerColor);
+                        }
+                    }else if (tile->getItem()->getItemType() != itemtype) {
+                        layerColor = LayerColor::create(Color4B(54, 54, 54, 100), TILE_SIDE_LENGTH, TILE_SIDE_LENGTH);
+                        layerColor->setPosition(Vec2(tile->getPosX(), tile->getPosY()));
+                        addChild(layerColor);
+                        layerColors.pushBack(layerColor);
+                    }
+                }
+            }
+        }
         lastPaintedTile = onTouchTile;
     }
     return true;
@@ -180,6 +212,8 @@ void NormalModeScene::onTouchMoved(Touch *touch, Event *event) {
         // repetition tile
         if (linePassedTiles.contains(onTouchTile)) {
             deleteDepetitionLine(onTouchTile);
+            //当删除连线的时候，需要调用标记怪物死亡
+            deathMark(linePassedTiles);
             lastPaintedTile = onTouchTile;
             return;
         }
@@ -200,8 +234,9 @@ void NormalModeScene::onTouchMoved(Touch *touch, Event *event) {
         }
         lastPaintedTile = onTouchTile;
         linePassedTiles.pushBack(onTouchTile);
+        //调用标记怪物死亡
+        deathMark(linePassedTiles);
     }
-    
 }
 
 void NormalModeScene::onTouchEnded(Touch *touch, Event *event) {
@@ -210,6 +245,17 @@ void NormalModeScene::onTouchEnded(Touch *touch, Event *event) {
         removeChild(line);
     }
     lines.clear();
+    //删除所有遮盖元素的层
+    for (LayerColor* layerC : layerColors) {
+        removeChild(layerC);
+    }
+    layerColors.clear();
+    
+    //删除死亡怪物标记
+    for (Sprite* dieds : diedSprites) {
+        removeChild(dieds);
+    }
+    diedSprites.clear();
 
     // remove tile items
     if (this->linePassedTiles.size() >= 3) {
@@ -351,5 +397,41 @@ int NormalModeScene::getLevel() {
 
 void NormalModeScene::setLevel(int level) {
     this->level = level;
+}
+
+void NormalModeScene::deathMark(cocos2d::Vector<TileSprite *> tiles){
+    
+    //记录有多少把剑
+    int sword = 0;
+    for (auto linepassedtile : tiles) {
+        int itemtype = linepassedtile->getItem()->getItemType();
+        if (itemtype == ItemType::sword) {
+            sword ++;
+        }
+    }
+    
+    //如果剑的数量足够杀死怪则标识，否则不标识，假设两把以上的剑可以杀死怪
+    //此处以后可以根据怪物血量判断是否可以杀死怪物
+    if (sword > 1) {
+        //先删除所有的标记，重新添加，可以防止撤销线段时未连线的怪物仍被标记
+        for (auto dieds : diedSprites) {
+            removeChild(dieds);
+        }
+        for (auto linepassedtile : tiles) {
+            int itemtype = linepassedtile->getItem()->getItemType();
+            if (itemtype == ItemType::monster1) {
+                diedSprite = Sprite::create("res/img/died.png");
+                float scale = ((float)TILE_SIDE_LENGTH / TEXTURE_SIDE_LENGTH) * SCALE_RATE;
+                diedSprite->setScale(scale,scale);
+                diedSprite->setPosition(Vec2(linepassedtile->getPosX()+TILE_SIDE_LENGTH/2, linepassedtile->getPosY()+TILE_SIDE_LENGTH/2));
+                addChild(diedSprite);
+                diedSprites.pushBack(diedSprite);
+            }
+        }
+    }else{
+        for (auto dieds : diedSprites) {
+            removeChild(dieds);
+        }
+    }
 }
 
