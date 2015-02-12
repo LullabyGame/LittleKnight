@@ -212,9 +212,9 @@ void NormalModeScene::onTouchMoved(Touch *touch, Event *event) {
         // repetition tile
         if (linePassedTiles.contains(onTouchTile)) {
             deleteDepetitionLine(onTouchTile);
-            lastPaintedTile = onTouchTile;
             //当删除连线的时候，需要调用标记怪物死亡
             deathMark(linePassedTiles);
+            lastPaintedTile = onTouchTile;
             return;
         }
         
@@ -409,11 +409,16 @@ void NormalModeScene::deathMark(cocos2d::Vector<TileSprite *> tiles){
             sword ++;
         }
     }
+    
     //如果剑的数量足够杀死怪则标识，否则不标识，假设两把以上的剑可以杀死怪
-    for (auto linepassedtile : tiles) {
-        int itemtype = linepassedtile->getItem()->getItemType();
-        //此处以后可以根据怪物血量判断是否可以杀死怪物
-        if (sword > 1) {
+    //此处以后可以根据怪物血量判断是否可以杀死怪物
+    if (sword > 1) {
+        //先删除所有的标记，重新添加，可以防止撤销线段时未连线的怪物仍被标记
+        for (auto dieds : diedSprites) {
+            removeChild(dieds);
+        }
+        for (auto linepassedtile : tiles) {
+            int itemtype = linepassedtile->getItem()->getItemType();
             if (itemtype == ItemType::monster1) {
                 diedSprite = Sprite::create("res/img/died.png");
                 float scale = ((float)TILE_SIDE_LENGTH / TEXTURE_SIDE_LENGTH) * SCALE_RATE;
@@ -422,10 +427,10 @@ void NormalModeScene::deathMark(cocos2d::Vector<TileSprite *> tiles){
                 addChild(diedSprite);
                 diedSprites.pushBack(diedSprite);
             }
-        }else{
-            for (auto dieds : diedSprites) {
-                removeChild(dieds);
-            }
+        }
+    }else{
+        for (auto dieds : diedSprites) {
+            removeChild(dieds);
         }
     }
 }
