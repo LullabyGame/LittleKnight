@@ -15,33 +15,41 @@ bool ItemSprite::init() {
     return true;
 }
 
-ItemSprite* ItemSprite::create(ItemType itemType) {
+ItemSprite* ItemSprite::createBasicItem(BasicItemType itemType) {
     ItemSprite *item = new ItemSprite();
     if (item && item->init()) {
         switch (itemType) {
-            case ItemType::sword:
-                item->initWithSpriteFrameName("sword.png");
-                item->setItemType(ItemType::sword);
+            case BasicItemType::sword1:
+                item->initWithSpriteFrameName("sword-1.png");
+                item->setItemType(BasicItemType::sword1);
                 break;
-            case ItemType::health:
+            case BasicItemType::health:
                 item->initWithSpriteFrameName("health.png");
-                item->setItemType(ItemType::health);
+                item->setItemType(BasicItemType::health);
                 break;
-            case ItemType::mana:
+            case BasicItemType::mana:
                 item->initWithSpriteFrameName("magic.png");
-                item->setItemType(ItemType::mana);
+                item->setItemType(BasicItemType::mana);
                 break;
-            case ItemType::conis:
+            case BasicItemType::conis:
                 item->initWithSpriteFrameName("coins.png");
-                item->setItemType(ItemType::conis);
+                item->setItemType(BasicItemType::conis);
                 break;
-            case ItemType::shield:
+            case BasicItemType::shield:
                 item->initWithSpriteFrameName("shield.png");
-                item->setItemType(ItemType::shield);
+                item->setItemType(BasicItemType::shield);
                 break;
-            case ItemType::monster1:
-                item->initWithSpriteFrameName("monster.png");
-                item->setItemType(ItemType::monster1);
+            case BasicItemType::enemy2:
+                item->initWithSpriteFrameName("enemy-2.png");
+                item->setItemType(BasicItemType::enemy2);
+                break;
+            case BasicItemType::enemy3:
+                item->initWithSpriteFrameName("enemy-3.png");
+                item->setItemType(BasicItemType::enemy3);
+                break;
+            case BasicItemType::enemy4:
+                item->initWithSpriteFrameName("enemy-4.png");
+                item->setItemType(BasicItemType::enemy4);
                 break;
         }
         item->autorelease();
@@ -50,6 +58,31 @@ ItemSprite* ItemSprite::create(ItemType itemType) {
     CC_SAFE_DELETE(item);
     return NULL;
 }
+
+ItemSprite* ItemSprite::createBossItem(BossItemType itemType) {
+    ItemSprite *item = new ItemSprite();
+    if (item && item->init()) {
+        switch (itemType) {
+            case BossItemType::boss1:
+                item->initWithSpriteFrameName("boss-1.png");
+                item->setItemType(BossItemType::boss1);
+                break;
+            case BossItemType::boss2:
+                item->initWithSpriteFrameName("boss-2.png");
+                item->setItemType(BossItemType::boss2);
+                break;
+            case BossItemType::boss3:
+                item->initWithSpriteFrameName("boss-3.png");
+                item->setItemType(BossItemType::boss3);
+                break;
+        }
+        item->autorelease();
+        return item;
+    }
+    CC_SAFE_DELETE(item);
+    return NULL;
+}
+
 
 
 int ItemSprite::getItemType() {

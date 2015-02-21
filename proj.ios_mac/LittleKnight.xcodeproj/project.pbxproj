@@ -63,6 +63,8 @@
 		CF8D799E1A6D5FF500B0230C /* MainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF8D799B1A6D5FF500B0230C /* MainMenuScene.cpp */; };
 		CF9540B81A71213900C10D5C /* ItemSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF9540B61A71213900C10D5C /* ItemSprite.cpp */; };
 		CF9540B91A71213900C10D5C /* ItemSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF9540B61A71213900C10D5C /* ItemSprite.cpp */; };
+		CF9FF4BC1A94DE5D002C2FDE /* EnemySprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF9FF4BA1A94DE5D002C2FDE /* EnemySprite.cpp */; };
+		CF9FF4BD1A94DE5D002C2FDE /* EnemySprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF9FF4BA1A94DE5D002C2FDE /* EnemySprite.cpp */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
@@ -130,6 +132,8 @@
 		CF8D799C1A6D5FF500B0230C /* MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuScene.h; sourceTree = "<group>"; };
 		CF9540B61A71213900C10D5C /* ItemSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ItemSprite.cpp; sourceTree = "<group>"; };
 		CF9540B71A71213900C10D5C /* ItemSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemSprite.h; sourceTree = "<group>"; };
+		CF9FF4BA1A94DE5D002C2FDE /* EnemySprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnemySprite.cpp; sourceTree = "<group>"; };
+		CF9FF4BB1A94DE5D002C2FDE /* EnemySprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnemySprite.h; sourceTree = "<group>"; };
 		CFE0D34C1A83C8C10010021B /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMacros.h; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -254,6 +258,8 @@
 				CF8D798F1A6D5DC800B0230C /* TileSprite.h */,
 				CF9540B61A71213900C10D5C /* ItemSprite.cpp */,
 				CF9540B71A71213900C10D5C /* ItemSprite.h */,
+				CF9FF4BA1A94DE5D002C2FDE /* EnemySprite.cpp */,
+				CF9FF4BB1A94DE5D002C2FDE /* EnemySprite.h */,
 				CF89B9AE1A77B5EE00A8FC0C /* LineSprite.cpp */,
 				CF89B9AF1A77B5EE00A8FC0C /* LineSprite.h */,
 				CF5F17931A7516C7008256D1 /* Settings.h */,
@@ -447,6 +453,7 @@
 				CF8D798C1A6D5D8500B0230C /* NormalModeScene.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				CF8D79991A6D5FDF00B0230C /* LoadingScene.cpp in Sources */,
+				CF9FF4BC1A94DE5D002C2FDE /* EnemySprite.cpp in Sources */,
 				CF8D799D1A6D5FF500B0230C /* MainMenuScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -460,6 +467,7 @@
 				CF8D79911A6D5DC800B0230C /* TileSprite.cpp in Sources */,
 				CF8D799E1A6D5FF500B0230C /* MainMenuScene.cpp in Sources */,
 				CF8D799A1A6D5FDF00B0230C /* LoadingScene.cpp in Sources */,
+				CF9FF4BD1A94DE5D002C2FDE /* EnemySprite.cpp in Sources */,
 				CF89B9B11A77B5EE00A8FC0C /* LineSprite.cpp in Sources */,
 				CF9540B91A71213900C10D5C /* ItemSprite.cpp in Sources */,
 			);

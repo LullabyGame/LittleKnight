@@ -11,7 +11,7 @@
 
 const int TEXTURE_SIDE_LENGTH = 102;
 const float SCALE_RATE = 0.8;
-const int TOTAL_ITEM_TYPE = 6;// total type of tile
+const int TOTAL_ITEM_TYPE = 7;// total type of tile
 const int MATRIX_WIDTH = 9;// the width number of tile matrix
 const int MATRIX_HEIGHT = 9;// the height number of tile matrix
 const int TILE_GAP = 2;//the gap of tiles

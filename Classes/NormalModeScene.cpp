@@ -111,8 +111,8 @@ void NormalModeScene::initTilesAndItems() {
                         float posY = BOTTOM_PADDING + (TILE_SIDE_LENGTH + TILE_GAP) * (tiles.Size() - 1 - row);
                         
                         // init items
-                        ItemType randomType = ItemType(arc4random() % TOTAL_ITEM_TYPE);
-                        ItemSprite *item = ItemSprite::create(randomType);
+                        BasicItemType randomType = BasicItemType(arc4random() % TOTAL_ITEM_TYPE);
+                        ItemSprite *item = ItemSprite::createBasicItem(randomType);
                         
                         // add item to tile
                         TileSprite *tile = TileSprite::createTile(posX ,posY, TILE_SIDE_LENGTH, TILE_SIDE_LENGTH);
@@ -154,17 +154,17 @@ bool NormalModeScene::onTouchBegan(Touch *touch, Event *event) {
             for (int j = 0; j < MATRIX_HEIGHT; j++) {
                 TileSprite* tile = tileMatrix[i][j];
                 if (tile != NULL) {
-                    if (itemtype == ItemType::sword){
-                        if (tile->getItem()->getItemType() != ItemType::monster1 &&
-                            tile->getItem()->getItemType() != ItemType::sword) {
+                    if (itemtype == BasicItemType::sword1){
+                        if (tile->getItem()->getItemType() != BasicItemType::enemy2 &&
+                            tile->getItem()->getItemType() != BasicItemType::sword1) {
                             layerColor = LayerColor::create(Color4B(54, 54, 54, 100), TILE_SIDE_LENGTH, TILE_SIDE_LENGTH);
                             layerColor->setPosition(Vec2(tile->getPosX(), tile->getPosY()));
                             addChild(layerColor);
                             layerColors.pushBack(layerColor);
                         }
-                    }else if (itemtype == ItemType::monster1){
-                        if (tile->getItem()->getItemType() != ItemType::monster1 &&
-                            tile->getItem()->getItemType() != ItemType::sword) {
+                    }else if (itemtype == BasicItemType::enemy2){
+                        if (tile->getItem()->getItemType() != BasicItemType::enemy2 &&
+                            tile->getItem()->getItemType() != BasicItemType::sword1) {
                             layerColor = LayerColor::create(Color4B(54, 54, 54, 100), TILE_SIDE_LENGTH, TILE_SIDE_LENGTH);
                             layerColor->setPosition(Vec2(tile->getPosX(), tile->getPosY()));
                             addChild(layerColor);
@@ -265,7 +265,7 @@ void NormalModeScene::onTouchEnded(Touch *touch, Event *event) {
             particle->setStartColor(Color4F(238, 222, 170, 100));
             particle->setEndColor(Color4F(238, 222, 170, 100));
             particle->setPosition(Vec2(tile->getPosX()+TILE_SIDE_LENGTH/2,tile->getPosY()+TILE_SIDE_LENGTH/2));
-            if (tile->getItem()->getItemType() == ItemType::monster1) {
+            if (tile->getItem()->getItemType() == BasicItemType::enemy2) {
                 remainsMonster--;
                 if (remainsMonster <= 0) {
                     int nextLevel = this->level + 1;
@@ -320,8 +320,8 @@ void NormalModeScene::fillTiles() {
         for (int j = 0; j < MATRIX_HEIGHT; j++) {
             TileSprite* tile = tileMatrix[i][j];
             if (tile != NULL && tile->getItem() == NULL) {
-                ItemType randomType = ItemType(arc4random() % TOTAL_ITEM_TYPE);
-                ItemSprite *item = ItemSprite::create(randomType);
+                BasicItemType randomType = BasicItemType(arc4random() % TOTAL_ITEM_TYPE);
+                ItemSprite *item = ItemSprite::createBasicItem(randomType);
                 tile->setItem(item);
                 tile->addChild(item);
             }
@@ -362,9 +362,9 @@ bool NormalModeScene::isSameItemType(TileSprite* lastTile, TileSprite* currentTi
     
     if (lastTile->getItem()->getItemType() == currentTile->getItem()->getItemType()) {
         return true;
-    }else if(lastTile->getItem()->getItemType() == ItemType::sword && currentTile->getItem()->getItemType() == ItemType::monster1) {
+    }else if(lastTile->getItem()->getItemType() == BasicItemType::sword1 && currentTile->getItem()->getItemType() == BasicItemType::enemy2) {
         return true;
-    }else if (lastTile->getItem()->getItemType() == ItemType::monster1 && currentTile->getItem()->getItemType() == ItemType::sword) {
+    }else if (lastTile->getItem()->getItemType() == BasicItemType::enemy2 && currentTile->getItem()->getItemType() == BasicItemType::sword1) {
         return true;
     }else {
         return false;
@@ -405,7 +405,7 @@ void NormalModeScene::deathMark(cocos2d::Vector<TileSprite *> tiles){
     int sword = 0;
     for (auto linepassedtile : tiles) {
         int itemtype = linepassedtile->getItem()->getItemType();
-        if (itemtype == ItemType::sword) {
+        if (itemtype == BasicItemType::sword1) {
             sword ++;
         }
     }
@@ -419,7 +419,7 @@ void NormalModeScene::deathMark(cocos2d::Vector<TileSprite *> tiles){
         }
         for (auto linepassedtile : tiles) {
             int itemtype = linepassedtile->getItem()->getItemType();
-            if (itemtype == ItemType::monster1) {
+            if (itemtype == BasicItemType::enemy2) {
                 diedSprite = Sprite::create("res/img/died.png");
                 float scale = ((float)TILE_SIDE_LENGTH / TEXTURE_SIDE_LENGTH) * SCALE_RATE;
                 diedSprite->setScale(scale,scale);

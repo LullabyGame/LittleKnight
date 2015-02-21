@@ -33,8 +33,8 @@ bool LoadingScene::init() {
     CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("sound/got.mp3");
     
     // init sprite cache texture and change scene =>
-    Director::getInstance()->getTextureCache()->addImageAsync("img/LittleKnight.png", CC_CALLBACK_1(LoadingScene::loadingCallBack, this));
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("img/LittleKnight.plist");
+    Director::getInstance()->getTextureCache()->addImageAsync("img/littleknight.png", CC_CALLBACK_1(LoadingScene::loadingCallBack, this));
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("img/littleknight.plist");
 
     return true;
 }

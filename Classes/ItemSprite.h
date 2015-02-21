@@ -13,14 +13,38 @@
 
 USING_NS_CC;
 
-// tile中的元素类型,根据类型生成不同元素
-enum ItemType {
-    sword,
+// tile中的基础元素类型,根据类型生成不同元素
+enum BasicItemType {
+    sword1,
     health,
     mana,
     conis,
     shield,
-    monster1
+    enemy2,
+    enemy3,
+    enemy4,
+};
+
+// tile中的Boss元素类型
+enum BossItemType {
+    boss1,
+    boss2,
+    boss3
+};
+
+// tile中的特别元素类型
+enum SpecialItemType {
+    sword2,
+    hero1
+};
+
+// 技能元素类型
+enum SkillItemType {
+    skill1,
+    skill2,
+    skill3,
+    skill4,
+    skill5
 };
 
 class ItemSprite : public Sprite {
@@ -28,7 +52,8 @@ class ItemSprite : public Sprite {
 public:
     CREATE_FUNC(ItemSprite);
     virtual bool init();
-    static ItemSprite* create(ItemType elementType);
+    static ItemSprite* createBasicItem(BasicItemType itemType);
+    static ItemSprite* createBossItem(BossItemType itemType);
     
     int getItemType();
     void setItemType(int itemType);

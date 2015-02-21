@@ -13,7 +13,7 @@
 
 typedef struct tagResource {
     cocos2d::Size size;
-    char directory[100]; 
+    char directory[100];
 }Resource;
 
 //static Resource smallResource  =  { cocos2d::Size(480, 320),   "iphone" };
