@@ -8,6 +8,9 @@
 
 #include "ItemSprite.h"
 
+/**
+ * 默认init方法
+ */
 bool ItemSprite::init() {
     if (!Sprite::init()) {
         return false;
@@ -15,6 +18,12 @@ bool ItemSprite::init() {
     return true;
 }
 
+/**
+ *  创建基础类Item
+ *
+ *  @param itemType BasicItem类型
+ *  @return 创建的Item元素
+ */
 ItemSprite* ItemSprite::createBasicItem(BasicItemType itemType) {
     ItemSprite *item = new ItemSprite();
     if (item && item->init()) {
@@ -59,6 +68,13 @@ ItemSprite* ItemSprite::createBasicItem(BasicItemType itemType) {
     return NULL;
 }
 
+
+/**
+ *  创建Boss类Item
+ *
+ *  @param itemType BasicItem类型
+ *  @return 创建的Item元素
+ */
 ItemSprite* ItemSprite::createBossItem(BossItemType itemType) {
     ItemSprite *item = new ItemSprite();
     if (item && item->init()) {
@@ -84,6 +100,7 @@ ItemSprite* ItemSprite::createBossItem(BossItemType itemType) {
 }
 
 
+/*Get & Set方法*/
 
 int ItemSprite::getItemType() {
     return this->itemType;

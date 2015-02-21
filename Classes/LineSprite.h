@@ -2,7 +2,7 @@
 //  LineSprite.h
 //  LittleKnight
 //
-//  Created by JinTongyao on 1/27/15.
+//  Line对象的定义
 //
 //
 

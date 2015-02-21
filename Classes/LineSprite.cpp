@@ -2,12 +2,15 @@
 //  LineSprite.cpp
 //  LittleKnight
 //
-//  Created by JinTongyao on 1/27/15.
+//  Line对象的实现
 //
 //
 
 #include "LineSprite.h"
 
+/**
+ * init方法
+ */
 bool LineSprite::init() {
     if(!Sprite::init()) {
         return false;
@@ -15,6 +18,15 @@ bool LineSprite::init() {
     return true;
 }
 
+
+/**
+ *  创建连接两个Tile间的Line
+ *
+ *  @param beginTile 起始Tile
+ *  @param endTile   结束Tile
+ *
+ *  @return 创建的Line
+ */
 LineSprite* LineSprite::createLine(TileSprite* beginTile, TileSprite* endTile) {
     LineSprite* line = new LineSprite();
     if(line && line->init()) {
@@ -28,6 +40,13 @@ LineSprite* LineSprite::createLine(TileSprite* beginTile, TileSprite* endTile) {
     return NULL;
 }
 
+
+/**
+ *  画线方法
+ *
+ *  @param beginTile 起始Tile
+ *  @param endTile   结束Tile
+ */
 void LineSprite::draw(TileSprite* beginTile, TileSprite* endTile) {
     DrawNode* drawNode = DrawNode::create();
     drawNode->drawSegment(Vec2(beginTile->getPosX() + (beginTile->getWidth() / 2), beginTile->getPosY() + (beginTile->getHeight() / 2)),
@@ -35,6 +54,8 @@ void LineSprite::draw(TileSprite* beginTile, TileSprite* endTile) {
                           6, Color4F(111, 0, 0, 50));
     this->addChild(drawNode, 20);
 }
+
+/*Get & Set方法*/
 
 TileSprite* LineSprite::getBeginTile() {
     return this->beginTile;

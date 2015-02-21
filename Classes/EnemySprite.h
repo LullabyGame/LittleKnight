@@ -2,7 +2,7 @@
 //  EnemySprite.h
 //  LittleKnight
 //
-//  Created by JinTongyao on 2/18/15.
+//  敌人对象定义
 //
 //
 

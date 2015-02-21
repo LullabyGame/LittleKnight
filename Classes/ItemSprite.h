@@ -2,7 +2,7 @@
 //  ItemSprite.h
 //  LittleKnight
 //
-//  Created by JinTongyao on 1/22/15.
+//  Item元素定义
 //
 //
 
@@ -13,7 +13,7 @@
 
 USING_NS_CC;
 
-// tile中的基础元素类型,根据类型生成不同元素
+// tile中的基础元素类型
 enum BasicItemType {
     sword1,
     health,
@@ -30,12 +30,6 @@ enum BossItemType {
     boss1,
     boss2,
     boss3
-};
-
-// tile中的特别元素类型
-enum SpecialItemType {
-    sword2,
-    hero1
 };
 
 // 技能元素类型
