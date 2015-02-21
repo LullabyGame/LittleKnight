@@ -2,7 +2,7 @@
 //  TileSprite.h
 //  LittleKnight
 //
-//  Created by JinTongyao on 1/19/15.
+//  Tile元素定义
 //
 //
 

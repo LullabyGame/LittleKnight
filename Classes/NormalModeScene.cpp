@@ -2,7 +2,7 @@
 //  NormalModeScene.cpp
 //  LittleKnight
 //
-//  Created by JinTongyao on 1/13/15.
+//  普通模式Scene实现
 //
 //
 
@@ -213,7 +213,7 @@ void NormalModeScene::onTouchMoved(Touch *touch, Event *event) {
         if (linePassedTiles.contains(onTouchTile)) {
             deleteDepetitionLine(onTouchTile);
             //当删除连线的时候，需要调用标记怪物死亡
-            deathMark(linePassedTiles);
+            markDeath(linePassedTiles);
             lastPaintedTile = onTouchTile;
             return;
         }
@@ -235,7 +235,7 @@ void NormalModeScene::onTouchMoved(Touch *touch, Event *event) {
         lastPaintedTile = onTouchTile;
         linePassedTiles.pushBack(onTouchTile);
         //调用标记怪物死亡
-        deathMark(linePassedTiles);
+        markDeath(linePassedTiles);
     }
 }
 
@@ -399,7 +399,7 @@ void NormalModeScene::setLevel(int level) {
     this->level = level;
 }
 
-void NormalModeScene::deathMark(cocos2d::Vector<TileSprite *> tiles){
+void NormalModeScene::markDeath(cocos2d::Vector<TileSprite *> tiles){
     
     //记录有多少把剑
     int sword = 0;
@@ -420,15 +420,15 @@ void NormalModeScene::deathMark(cocos2d::Vector<TileSprite *> tiles){
         for (auto linepassedtile : tiles) {
             int itemtype = linepassedtile->getItem()->getItemType();
             if (itemtype == BasicItemType::enemy2) {
-                diedSprite = Sprite::create("res/img/died.png");
+                deadSprite = Sprite::create("res/img/died.png");
                 float scale = ((float)TILE_SIDE_LENGTH / TEXTURE_SIDE_LENGTH) * SCALE_RATE;
-                diedSprite->setScale(scale,scale);
-                diedSprite->setPosition(Vec2(linepassedtile->getPosX()+TILE_SIDE_LENGTH/2, linepassedtile->getPosY()+TILE_SIDE_LENGTH/2));
-                addChild(diedSprite);
-                diedSprites.pushBack(diedSprite);
+                deadSprite->setScale(scale,scale);
+                deadSprite->setPosition(Vec2(linepassedtile->getPosX()+TILE_SIDE_LENGTH/2, linepassedtile->getPosY()+TILE_SIDE_LENGTH/2));
+                addChild(deadSprite);
+                diedSprites.pushBack(deadSprite);
             }
         }
-    }else{
+    }else {
         for (auto dieds : diedSprites) {
             removeChild(dieds);
         }

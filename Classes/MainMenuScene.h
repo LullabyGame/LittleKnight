@@ -2,7 +2,7 @@
 //  MainMenuScene.h
 //  LittleKnight
 //
-//  Created by JinTongyao on 1/19/15.
+//  主菜单Scene定义
 //
 //
 

@@ -2,37 +2,46 @@
 //  LoadingScene.cpp
 //  LittleKnight
 //
-//  Created by JinTongyao on 1/19/15.
+//  Loading Scene实现
 //
 //
 
 #include "LoadingScene.h"
 
+/**
+ *  创建Scene
+ *
+ *  @return 创建的Scene
+ */
 Scene* LoadingScene::createScene() {
-    auto scene = Scene::create();
-    auto layer = LoadingScene::create();
+    auto *scene = Scene::create();
+    auto *layer = LoadingScene::create();
     scene->addChild(layer);
+    
     return scene;
 }
 
 
+/**
+ * init方法实现
+ */
 bool LoadingScene::init() {
     if(!Layer::init()) {
         return false;
     }
     
-    // add logo to current scene
+    // 添加logo
     auto *logo = Sprite::create("img/lullaby.jpg");
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
     logo->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
     this->addChild(logo);
     
-    // preload sound and music
+    // 预读取音乐和音效
     CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("sound/Ka-Ching.wav");
     CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("sound/got.mp3");
     
-    // init sprite cache texture and change scene =>
+    // 初始化素材图片
     Director::getInstance()->getTextureCache()->addImageAsync("img/littleknight.png", CC_CALLBACK_1(LoadingScene::loadingCallBack, this));
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("img/littleknight.plist");
 
@@ -40,6 +49,11 @@ bool LoadingScene::init() {
 }
 
 
+/**
+ *  Loading完成后回调
+ *
+ *  @param texture
+ */
 void LoadingScene::loadingCallBack(Texture2D *texture) {
     auto scene = MainMenuScene::createScene();
     TransitionScene *transition = TransitionFade::create(1, scene);

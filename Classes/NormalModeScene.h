@@ -2,7 +2,7 @@
 //  NormalModeScene.h
 //  LittleKnight
 //
-//  Created by JinTongyao on 1/13/15.
+//  普通模式Scene定义
 //
 //
 #pragma once
@@ -41,8 +41,8 @@ public:
     
 private:
     LayerColor* backgroundLayer;
-    LayerColor* layerColor;//遮挡不能连线的元素
-    Sprite* diedSprite;//标记死亡的怪物
+    LayerColor* layerColor;// 遮挡不能连线的元素
+    Sprite* deadSprite;// 标记死亡的怪物
     TileSprite* tileMatrix[MATRIX_WIDTH][MATRIX_HEIGHT] = {0};
     TileSprite* lastPaintedTile;
     cocos2d::Vector<TileSprite*> linePassedTiles;
@@ -50,6 +50,7 @@ private:
     cocos2d::Vector<LayerColor*> layerColors;
     cocos2d::Vector<Sprite*> diedSprites;
     int level = 0;
+    
     int remainsMonster;
     Label* remainsMonsterLabel;
     
@@ -57,15 +58,13 @@ private:
     TileSprite* getOnTouchTile(float onTouchX, float onTouchY);// 查询当前触摸点在Tile矩阵中的位置
     void darwLine(TileSprite* beginTile, TileSprite* endTile);
     bool isSameItemType(TileSprite* lastTile, TileSprite* currentTile);
-    void deleteDepetitionLine(TileSprite* onTouchTile);//当选择到已经经过的格子，删除该格子后的线段
+    void deleteDepetitionLine(TileSprite* onTouchTile);// 当选择到已经经过的格子，删除该格子后的线段
     void fallDownItems();
     void fillTiles();
-    void deathMark(cocos2d::Vector<TileSprite*> tiles);//标记怪物死亡
+    void markDeath(cocos2d::Vector<TileSprite*> tiles);// 标记怪物死亡
     
     void mainMenuCallback(Ref* sender);
     void addTouchListeners();
-    
-
     
 };
 

@@ -2,12 +2,32 @@
 //  TileSprite.cpp
 //  LittleKnight
 //
-//  Created by JinTongyao on 1/19/15.
+//  Tile元素实现
 //
 //
 
 #include "TileSprite.h"
 
+/**
+ * 默认init方法
+ */
+bool TileSprite::init() {
+    if (!LayerColor::initWithColor(Color4B(0, 0, 0, 60))) {
+        return false;
+    }
+    return true;
+}
+
+
+/**
+ *  创建Tile
+ *
+ *  @param posX   x轴坐标
+ *  @param posY   y轴坐标
+ *  @param width  Tile宽
+ *  @param height Tile高
+ *  @return 创建的Tile元素
+ */
 TileSprite* TileSprite::createTile(float posX, float posY, float width, float height) {
     TileSprite *tile = new TileSprite();
     if (tile && tile->init()) {
@@ -27,12 +47,7 @@ TileSprite* TileSprite::createTile(float posX, float posY, float width, float he
     return NULL;
 }
 
-bool TileSprite::init() {
-    if (!LayerColor::initWithColor(Color4B(0, 0, 0, 60))) {
-        return false;
-    }
-    return true;
-}
+/*Get & Set方法*/
 
 int TileSprite::getArrayX() {
     return this->arrayX;

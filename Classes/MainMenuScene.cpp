@@ -2,19 +2,30 @@
 //  MainMenuScene.cpp
 //  LittleKnight
 //
-//  Created by JinTongyao on 1/19/15.
+//  主菜单Scene实现
 //
 //
 
 #include "MainMenuScene.h"
 
+/**
+ *  创建Scene
+ *
+ *  @return 创建的Scene
+ */
 Scene* MainMenuScene::createScene() {
-    auto scene = Scene::create();
-    auto layer = MainMenuScene::create();
+    auto *scene = Scene::create();
+    auto *layer = MainMenuScene::create();
     scene->addChild(layer);
+    
     return scene;
 }
 
+
+/**
+ * init方法
+ * 定义各种菜单按钮
+ */
 bool MainMenuScene::init() {
     if(!Layer::init()) {
         return false;
@@ -22,11 +33,11 @@ bool MainMenuScene::init() {
     
     Size visiableSize = Director::getInstance()->getVisibleSize();
     
-    // background layer
+    // 背景Layer
     auto backgroundLayer = LayerColor::create(Color4B(238, 222, 170, 255));
     this->addChild(backgroundLayer);
 
-    // normal mode menu
+    // NormalMode按钮
     auto nomrmalModeLable = MenuItemLabel::create(LabelTTF::create("Normal Mode", "Futura.ttf", 32), CC_CALLBACK_1(MainMenuScene::menuNormalModeCallback, this));
     nomrmalModeLable->setTag(0);
     nomrmalModeLable->setAnchorPoint(Point(0, 0));
@@ -38,6 +49,12 @@ bool MainMenuScene::init() {
     return true;
 }
 
+
+/**
+ *  NormalMode按钮回调
+ *
+ *  @param sender
+ */
 void MainMenuScene::menuNormalModeCallback(Ref *sender) {
     MenuItem* selectedMenu = (MenuItem*) sender;
     int tag = selectedMenu->getTag();
