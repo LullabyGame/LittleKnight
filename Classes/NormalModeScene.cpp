@@ -10,7 +10,25 @@
 
 NormalModeScene::NormalModeScene(){}
 
+/**
+ *  创建Scene
+ *
+ *  @param level 当前关卡
+ *  @return 创建的Scene
+ */
+Scene* NormalModeScene::createScene(int level) {
+    auto *scene = Scene::create();
+    auto *layer = NormalModeScene::createLayer(level);
+    scene->addChild(layer);
+    CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("sound/got.mp3");
+    
+    return scene;
+}
 
+
+/**
+ * init方法
+ */
 bool NormalModeScene::init() {
     if (!Layer::init()) {
         return false;
@@ -19,17 +37,14 @@ bool NormalModeScene::init() {
 }
 
 
-Scene* NormalModeScene::createScene(int level) {
-    auto scene = Scene::create();
-    auto layer = NormalModeScene::createLayer(level);
-    scene->addChild(layer);
-//    CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("sound/got.mp3");
-    return scene;
-}
-
-
+/**
+ *  创建Layer
+ *
+ *  @param level 当前关卡
+ *  @return
+ */
 NormalModeScene* NormalModeScene::createLayer(int level) {
-    NormalModeScene* normalMode = new NormalModeScene();
+    NormalModeScene *normalMode = new NormalModeScene();
     if (normalMode && normalMode->init()) {
         normalMode->autorelease();
         normalMode->setLevel(level);
@@ -41,17 +56,20 @@ NormalModeScene* NormalModeScene::createLayer(int level) {
 }
 
 
+/**
+ * 初始化Layer
+ */
 bool NormalModeScene::initLayer() {
     Size visiableSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
     
-    // add background layer
+    // 添加背景层
     backgroundLayer = LayerColor::create(Color4B(238, 222, 170, 255));
     backgroundLayer->setPosition(Point(origin.x, origin.y));
     backgroundLayer->setContentSize(Size(visiableSize.width, visiableSize.height));
     this->addChild(backgroundLayer);
     
-    // add "back to main menu"
+    // 添加"back to main menu"按钮
     auto mainMenuLabel = MenuItemLabel::create(LabelTTF::create("Back to Main Menu", "Futura.ttf", 32), CC_CALLBACK_1(NormalModeScene::mainMenuCallback, this));
     mainMenuLabel->setAnchorPoint(Point(0, 0));
     mainMenuLabel->setPosition(Point(visiableSize.width / 2 - 150, visiableSize.height - 90));
@@ -59,7 +77,7 @@ bool NormalModeScene::initLayer() {
     mainMenu->setPosition(0, 0);
     backgroundLayer->addChild(mainMenu);
     
-    // add target number display
+    // 添加当前需要击杀的敌人数量显示
     std::stringstream levelSS;
     levelSS << this->getLevel();
     std::string levelName = "level/Level_" + levelSS.str() + ".json";
@@ -77,14 +95,18 @@ bool NormalModeScene::initLayer() {
     remainsMonsterLabel->setPosition((Point(visiableSize.width / 2, visiableSize.height - 150)));
     backgroundLayer->addChild(remainsMonsterLabel);
     
-    // init tiles by level json
+    // 初始化Tile和Item
     initTilesAndItems();
     
-    // add touch listener
+    // 添加事件监听
     addTouchListeners();
     return true;
 }
 
+
+/**
+ * 初始化Tile和Item
+ */
 void NormalModeScene::initTilesAndItems() {
     std::stringstream levelSS;
     levelSS << this->getLevel();
@@ -133,6 +155,10 @@ void NormalModeScene::initTilesAndItems() {
     }
 }
 
+
+/**
+ *  初始化事件监听
+ */
 void NormalModeScene::addTouchListeners() {
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(NormalModeScene::onTouchBegan, this);
@@ -141,20 +167,29 @@ void NormalModeScene::addTouchListeners() {
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 }
 
+
+/**
+ *  onTouchBegan监听
+ *
+ *  @param touch
+ *  @param event
+ *  @return
+ */
 bool NormalModeScene::onTouchBegan(Touch *touch, Event *event) {
     Point touchPoint = touch->getLocation();
     TileSprite* onTouchTile = getOnTouchTile(touchPoint.x, touchPoint.y);
     
     if (onTouchTile != NULL) {
         // CCLOG("当前选中的为Tile[%d][%d]", currentTile->getArrayX(), currentTile->getArrayY());
-        //获取当前点击格子的图片属性
-        int itemtype = onTouchTile->getItem()->getItemType();
-        //当点击事件发生时，给当前界面增加暗层，只显示相同的元素，不同的元素被遮盖，剑和怪物除外。
+        
+        int itemType = onTouchTile->getItem()->getItemType();// 获取当前选中Tile的类型
+        
+        // 添加遮罩,只显示当前选中的同类型元素
         for (int i = 0; i < MATRIX_WIDTH; i++) {
             for (int j = 0; j < MATRIX_HEIGHT; j++) {
                 TileSprite* tile = tileMatrix[i][j];
                 if (tile != NULL) {
-                    if (itemtype == BasicItemType::sword1){
+                    if (itemType == BasicItemType::sword1){
                         if (tile->getItem()->getItemType() != BasicItemType::enemy2 &&
                             tile->getItem()->getItemType() != BasicItemType::sword1) {
                             layerColor = LayerColor::create(Color4B(54, 54, 54, 100), TILE_SIDE_LENGTH, TILE_SIDE_LENGTH);
@@ -162,7 +197,7 @@ bool NormalModeScene::onTouchBegan(Touch *touch, Event *event) {
                             addChild(layerColor);
                             layerColors.pushBack(layerColor);
                         }
-                    }else if (itemtype == BasicItemType::enemy2){
+                    }else if (itemType == BasicItemType::enemy2){
                         if (tile->getItem()->getItemType() != BasicItemType::enemy2 &&
                             tile->getItem()->getItemType() != BasicItemType::sword1) {
                             layerColor = LayerColor::create(Color4B(54, 54, 54, 100), TILE_SIDE_LENGTH, TILE_SIDE_LENGTH);
@@ -170,7 +205,7 @@ bool NormalModeScene::onTouchBegan(Touch *touch, Event *event) {
                             addChild(layerColor);
                             layerColors.pushBack(layerColor);
                         }
-                    }else if (tile->getItem()->getItemType() != itemtype) {
+                    }else if (tile->getItem()->getItemType() != itemType) {
                         layerColor = LayerColor::create(Color4B(54, 54, 54, 100), TILE_SIDE_LENGTH, TILE_SIDE_LENGTH);
                         layerColor->setPosition(Vec2(tile->getPosX(), tile->getPosY()));
                         addChild(layerColor);
