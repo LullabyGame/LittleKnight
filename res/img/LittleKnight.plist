@@ -121,7 +121,7 @@
                 <key>sourceSize</key>
                 <string>{102,102}</string>
             </dict>
-            <key>magic.png</key>
+            <key>mana.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{162,188},{76,76}}</string>
@@ -231,13 +231,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>littleknight.png</string>
+            <string>LittleKnight.png</string>
             <key>size</key>
             <string>{256,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:7020b66dad2e24a468426d6f097dfd69:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:40f191362560c0c1c286b8711b0f70ef:1/1$</string>
             <key>textureFileName</key>
-            <string>littleknight.png</string>
+            <string>LittleKnight.png</string>
         </dict>
     </dict>
 </plist>

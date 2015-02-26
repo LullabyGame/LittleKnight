@@ -37,7 +37,7 @@ ItemSprite* ItemSprite::createBasicItem(BasicItemType itemType) {
                 item->setItemType(BasicItemType::health);
                 break;
             case BasicItemType::mana:
-                item->initWithSpriteFrameName("magic.png");
+                item->initWithSpriteFrameName("mana.png");
                 item->setItemType(BasicItemType::mana);
                 break;
             case BasicItemType::conis:
