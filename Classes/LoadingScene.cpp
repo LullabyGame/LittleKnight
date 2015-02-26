@@ -42,8 +42,8 @@ bool LoadingScene::init() {
     CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("sound/got.mp3");
     
     // 初始化素材图片
-    Director::getInstance()->getTextureCache()->addImageAsync("img/littleknight.png", CC_CALLBACK_1(LoadingScene::loadingCallBack, this));
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("img/littleknight.plist");
+    Director::getInstance()->getTextureCache()->addImageAsync("img/LittleKnight.png", CC_CALLBACK_1(LoadingScene::loadingCallBack, this));
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("img/LittleKnight.plist");
 
     return true;
 }
